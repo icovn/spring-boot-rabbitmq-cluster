@@ -220,7 +220,7 @@ như __publisher__, __exchange__, __queue__, __consumer__, __messsage__, __broke
 - __Đa luồng với consumer_
     + Mặc định __Spring__ chỉ chạy 1 __consumer__ khi dùng __RabbitListener__
     + Ta có thể thay đổi số luồng (thread) __consumer__ bằng 2 cách sau:
-        * Cấu hình trong file cấu hình
+        * Cấu hình trong file cấu hình (Spring Boot version >= v1.5.6.RELEASE)
 
         ```
         #appllication.properties
