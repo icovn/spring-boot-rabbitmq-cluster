@@ -270,3 +270,27 @@ như __publisher__, __exchange__, __queue__, __consumer__, __messsage__, __broke
     ```
     rabbitmqctl -n rabbit set_policy ha-two "^queue\."    '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'
     ```
+    
+### Dùng __NGINX__ để LB __RabbitMQ__
+
+- Từ v1.9.0 __NGINX__ hỗ trợ LB TCP với thẻ __stream__ 
+- Kh cài đặt __NGINX__ từ source thêm cấu hình --with-stream
+- Cấu hình __NGINX__
+
+    ```
+    stream {
+        upstream rabbitmq_backend {
+            zone rabbitmq_backend 64k;
+    
+            server localhost:5671 weight=5 max_fails=2 fail_timeout=30s;
+            server localhost:5672 backup;
+            server localhost:5673 weight=5 max_fails=2 fail_timeout=30s;
+        }
+    
+        server {
+            listen        5677;
+            proxy_pass    rabbitmq_backend;
+        }
+    } 
+    ```
+   
